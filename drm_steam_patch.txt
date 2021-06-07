@@ -1,0 +1,22 @@
+find mem.base(cip), "74 0B B0 01"
+cmp $result, 0
+je first_pattern_not_found
+
+mov $result, #90 90#
+log "patched SteamAPI_Init"
+
+find mem.base(cip), "0F 84 D3 05 00 00"
+cmp $result, 0
+je second_pattern_not_found
+
+mov $result, #E9 D4 05 00 00#
+log "patched SteamAPI_RestartAppIfNecessary"
+ret
+
+first_pattern_not_found:
+log "first pattern not found"
+ret
+
+second_pattern_not_found:
+log "second pattern not found"
+ret
